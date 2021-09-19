@@ -15,15 +15,21 @@ module.exports = (api) => {
     ],
     plugins: [
       [
+        require("@babel/plugin-transform-modules-commonjs"),
+        {
+          strictMode: true
+        },
+      ],
+      [
         '@babel/plugin-proposal-decorators',
         {
           legacy: true
         }
       ],
-/*       [
-        'transform-remove-console',
-        { exclude: ["log"] }
-      ], */
+      /*       [
+              'transform-remove-console',
+              { exclude: ["log"] }
+            ], */
       '@babel/plugin-proposal-class-properties'
     ]
   };

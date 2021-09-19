@@ -1,24 +1,13 @@
+/* eslint-disable */
 import React from 'react';
-import { Router } from 'react-router-dom';
-import { renderRoutes } from 'react-router-config';
-import { HelmetProvider } from 'react-helmet-async';
+import Utils from '@/utils';
 
-import history from '@/routing/common/history';
-import routes from '@/routing/common/routes';
-import store from '@/redux/configureStore';
-import { configureI18next } from '@/i18n';
-
-const i18n = configureI18next();
+Utils.checkStrictMode();
 
 const ClientRouter = () => (
-  <HelmetProvider>
-    <Router history={history}>
-      {renderRoutes(routes, {
-        store,
-        i18n
-      })}
-    </Router>
-  </HelmetProvider>
+  <div className="m-2">
+    Sandbox
+  </div>
 );
 
 export default ClientRouter;
