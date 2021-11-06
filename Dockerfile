@@ -1,7 +1,7 @@
 #----------------------
 # Stage 1: dependencies
 #----------------------
-FROM node:12.22-alpine3.14 AS dependencies
+FROM node:16.8.0-alpine3.14 AS dependencies
 
 RUN apk add dumb-init
 WORKDIR /usr/app
@@ -22,6 +22,8 @@ ARG SOURCE_HASH
 ENV SOURCE_HASH=$SOURCE_HASH
 ARG SOURCE_NAME
 ENV SOURCE_NAME=$SOURCE_NAME
+ARG DEBUG_MODE
+ENV DEBUG_MODE=$DEBUG_MODE
 ARG TMDB_API_ACCESS_TOKEN
 ENV TMDB_API_ACCESS_TOKEN=$TMDB_API_ACCESS_TOKEN
 ARG TMDB_API_REGION
