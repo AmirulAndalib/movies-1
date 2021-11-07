@@ -2,7 +2,11 @@ import React from 'react';
 import { render, hydrate } from 'react-dom';
 import { AppContainer } from 'react-hot-loader';
 
-import ClientRouter from '@/routing/ClientRouter';
+// Real application
+// import ClientRouter from '@/routing/ClientRouter';
+
+// Sandbox
+import ClientRouter from '@/sandbox/routing/ClientRouterSB';
 
 const renderMethod = (process.env.RENDERING === 'server')
   ? hydrate
