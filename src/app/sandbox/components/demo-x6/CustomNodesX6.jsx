@@ -3,15 +3,15 @@ import React, { Component, createRef } from 'react';
 
 import { Graph } from '@antv/x6';
 
-class MainX6 extends Component {
+class CustomNodesX6 extends Component {
   componentDidMount() {
-    const { mainEl } = this;
+    const { containerRef } = this;
 
-    console.log('--- MainX6.componentDidMount()');
-    console.log('mainEl.current:', mainEl.current);
+    console.log('--- CustomNodesX6.componentDidMount()');
+    console.log('containerRef.current:', containerRef.current);
 
     const graph = new Graph({
-      container: mainEl.current,
+      container: containerRef.current,
       grid: true,
     });
 
@@ -73,14 +73,14 @@ class MainX6 extends Component {
     return target;
   }
 
-  mainEl = createRef();
+  containerRef = createRef();
 
   render() {
-    console.log('--- MainX6.render()');
+    console.log('--- CustomNodesX6.render()');
 
     return (
       <div
-        ref={this.mainEl}
+        ref={this.containerRef}
         style={{
           width: '100%',
           height: '600px'
@@ -90,4 +90,4 @@ class MainX6 extends Component {
   }
 }
 
-export default MainX6;
+export default CustomNodesX6;
