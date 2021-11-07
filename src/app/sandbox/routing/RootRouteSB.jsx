@@ -1,9 +1,12 @@
 import React from 'react';
 
+import LayoutSB from '@/sandbox/components/layout/LayoutSB';
+import MainReaflow from '@/sandbox/components/demo-reaflow/MainReaflow';
+
 const RootRouteSB = () => (
-  <div className="m-2">
-    RootRouteSB
-  </div>
+  <LayoutSB text="reaflow demo">
+    <MainReaflow />
+  </LayoutSB>
 );
 
 export default RootRouteSB;
