@@ -52,6 +52,7 @@
     "webpack-dev-server": "4.4.0"
   },
   "dependencies": {
+    "@antv/layout": "0.1.19-beta.3",
     "@antv/x6": "1.28.1",
     "@babel/core": "7.15.0",
     "@babel/plugin-proposal-class-properties": "7.14.5",
