@@ -4,14 +4,13 @@ import './DagreIntX6.scss';
 import React, { Component, createRef } from 'react';
 import { Graph } from '@antv/x6';
 import { DagreLayout } from '@antv/layout';
-
-import { isString } from '@/utils/common';
-
-import { nodeEl } from '../_common/elements/nodeEl.js';
-import { edgeEl } from '../_common/elements/edgeEl.js';
-import { switchRouter } from '../_common/edges-routing/edges-routing.js';
+import '@antv/x6-react-shape';
 
 import { NODES, EDGES_BASIC, EDGES_ADDITIONAL } from '../_data-example/data-example.js';
+import { NODE_SHAPES, EDGE_EL } from '../_common/elements';
+
+import { switchRouter } from '../_common/edges-routing/edges-routing.js';
+import { isString } from '@/utils/common';
 
 class DagreIntX6 extends Component {
 
@@ -70,27 +69,32 @@ class DagreIntX6 extends Component {
     console.log('- dagre, containerEl:', containerEl);
     console.log('- dagre, modelRaw:', modelRaw);
     console.log('- dagre, modelLayout:', modelLayout);
-
   }
 
   containerRef = createRef();
 
   mapNodes = (data) => data.map(
     item => {
-      const { id, label, layer, customShape, ports } = item;
+      const { id, label, layer, customShape, ports, cls = 'node-circle', customParams } = item;
 
-      const el = nodeEl[
+      const nodeEl = NODE_SHAPES[
         customShape
           ? customShape
-          : 'circle'
+          : 'react'
       ];
+
+      const labelValue = customShape
+        ? `${id} \n (${label})`
+        : label;
 
       return {
         id,
-        label: `${id} \n (${label})`,
+        label: labelValue,
         layer,
         ports,
-        ...el
+        cls,
+        customParams,
+        ...nodeEl
       }
     }
   )
@@ -110,7 +114,7 @@ class DagreIntX6 extends Component {
         source,
         target,
         router: switchRouter(routerType),
-        ...edgeEl
+        ...EDGE_EL
       }
     }
   )

@@ -2,7 +2,7 @@ const NODE_CP = {
   id: 'id8',
   label: 'Это я',
   layer: 3,
-  customShape: 'rect',
+  cls: 'node-square',
   ports: {
     groups: {
       childrenPortsGroup: {
@@ -33,22 +33,26 @@ const NODES = [
   {
     id: 'id1',
     label: 'Дедушка',
-    layer: 1
+    layer: 1,
+    customShape: 'circle',
   },
   {
     id: 'id2',
     label: 'Бабушка',
-    layer: 1
+    layer: 1,
+    customShape: 'circle',
   },
   {
     id: 'id3',
     label: 'Дедушка',
-    layer: 1
+    layer: 1,
+    customShape: 'rectangle',
   },
   {
     id: 'id4',
     label: 'Бабушка',
-    layer: 1
+    layer: 1,
+    customShape: 'rectangle',
   },
   {
     id: 'id5',
@@ -69,7 +73,8 @@ const NODES = [
   {
     id: 'id9',
     label: 'Мать \n ребенка',
-    layer: 3
+    layer: 3,
+    cls: 'node-square',
   },
   {
     id: 'id10',
@@ -95,7 +100,7 @@ const NODES = [
     id: 'id14',
     label: 'Сын',
     layer: 4,
-    customShape: 'rect',
+    cls: 'node-square'
   },
 ];
 

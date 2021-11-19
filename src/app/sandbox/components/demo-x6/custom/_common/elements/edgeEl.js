@@ -1,4 +1,4 @@
-const edgeEl = {
+const EDGE_EL = {
   connector: {
     name: 'rounded',
     args: {},
@@ -9,13 +9,11 @@ const edgeEl = {
       strokeWidth: 1,
       targetMarker: {
         name: 'block',
-        // name: ''
+        // name: '',
         size: 5
       },
     },
   },
 };
 
-export {
-  edgeEl
-};
+export default EDGE_EL;
