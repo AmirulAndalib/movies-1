@@ -1,6 +1,6 @@
 /* eslint-disable no-console */
 
-const manhattanRouter = {
+const manhattanDefault = {
   name: 'manhattan',
   args: {
     step: 15,
@@ -8,12 +8,21 @@ const manhattanRouter = {
     endDirections: ['top', 'left'],
   },
 };
-const manhattanRouterChildren = {
+const manhattanBT = {
   name: 'manhattan',
   args: {
-    step: 15,
+    step: 10,
     startDirections: ['bottom'],
     endDirections: ['top'],
+  },
+};
+
+const metroBT = {
+  name: 'metro',
+  args: {
+    step: 10,
+    startDirections: ['bottom'],
+    endDirections: ['top']
   },
 };
 
@@ -39,14 +48,19 @@ const erRouter = {
 };
 */
 
-function manhattanRouterSwitch(val) {
+function switchRouter(val) {
   switch (val) {
-    case '1': return manhattanRouterChildren;
-    // case '2': return manhattanRouterRL;
-    default: return manhattanRouter;
+    case 'manhattan-bt':
+      return manhattanBT;
+
+    case 'metro-bt':
+      return metroBT;
+
+    default:
+      return manhattanDefault;
   }
 }
 
 export {
-  manhattanRouterSwitch
+  switchRouter
 };

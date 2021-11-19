@@ -4,7 +4,7 @@ import PT from 'prop-types';
 const LayoutSB = (props) => (
   <div className="m-2">
     {props.text}
-    <div className="border border-secondary">
+    <div>
       {props.children}
     </div>
   </div>

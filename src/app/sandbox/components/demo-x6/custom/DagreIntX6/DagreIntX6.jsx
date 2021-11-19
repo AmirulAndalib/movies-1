@@ -5,13 +5,16 @@ import React, { Component, createRef } from 'react';
 import { Graph } from '@antv/x6';
 import { DagreLayout } from '@antv/layout';
 
-import { nodeEl } from './elements/nodeEl.js';
-import { edgeEl } from './elements/edgeEl.js';
-import { manhattanRouterSwitch } from './edges-routing/edges-routing.js';
+import { isString } from '@/utils/common';
 
-import { nodes, edges } from '../data-example/data-example.js';
+import { nodeEl } from '../_common/elements/nodeEl.js';
+import { edgeEl } from '../_common/elements/edgeEl.js';
+import { switchRouter } from '../_common/edges-routing/edges-routing.js';
+
+import { NODES, EDGES_BASIC, EDGES_ADDITIONAL } from '../_data-example/data-example.js';
 
 class DagreIntX6 extends Component {
+
   componentDidMount() {
     const { containerRef } = this;
     const { current: containerEl } = containerRef;
@@ -19,29 +22,17 @@ class DagreIntX6 extends Component {
     console.log('--- DagreIntX6.componentDidMount()');
 
     const modelRaw = {
-      nodes: nodes.map(
-        item => ({
-          ...item,
-          ...nodeEl
-        })
-      ),
-      edges: [],
+      nodes: this.mapNodes(NODES),
+      edges: this.mapEdges(EDGES_BASIC)
     };
-
-    edges.forEach((edge) => {
-      return modelRaw.edges.push({
-        source: edge[0],
-        target: edge[1],
-        // router: 'normal',
-        router: manhattanRouterSwitch(edge[2]),
-        ...edgeEl
-      });
-    });
 
     const graph = new Graph({
       container: containerEl,
+      interacting: {
+        nodeMovable: true,
+      },
       grid: {
-        size: 15,
+        size: 25,
         visible: true,
         type: 'mesh',
       },
@@ -54,34 +45,75 @@ class DagreIntX6 extends Component {
       rankdir: 'TB',
 
       // Выравнивание узлов
-      align: '',
+      // align: 'UR',
 
       // Количество пикселей, разделяющих уровни (по вертикаль)
       ranksep: 45,
 
       // Количество пикселей, разделяющих узлы (по горизонтали)
-      nodesep: 30,
+      nodesep: 20,
 
       // Количество пикселей, разделяющих связи (по горизонтали)
       edgesep: 20,
 
       // Тип алгоритма для присвоения ранга каждому узлу входного графа
-      ranker: 'tight-tree',
-
-      weight: 2
+      // ranker: 'tight-tree',
+      ranker: 'longest-path'
     });
 
     const modelLayout = dagreLayout.layout(modelRaw);
 
     graph.fromJSON(modelLayout);
 
-    console.log('- containerEl:', containerEl);
-    console.log('- modelRaw:', modelRaw);
-    console.log('- modelLayout:', modelLayout);
+    EDGES_ADDITIONAL.forEach(i => graph.addEdge(i));
+
+    console.log('- dagre, containerEl:', containerEl);
+    console.log('- dagre, modelRaw:', modelRaw);
+    console.log('- dagre, modelLayout:', modelLayout);
 
   }
 
   containerRef = createRef();
+
+  mapNodes = (data) => data.map(
+    item => {
+      const { id, label, layer, customShape, ports } = item;
+
+      const el = nodeEl[
+        customShape
+          ? customShape
+          : 'circle'
+      ];
+
+      return {
+        id,
+        label: `${id} \n (${label})`,
+        layer,
+        ports,
+        ...el
+      }
+    }
+  )
+
+  mapEdges = (data) => data.map(
+    item => {
+      const { source, target, routerType } = item;
+
+      const getPoint = (val) => {
+        return isString(val)
+          ? val
+          : `${val.cell}/${val.port}`
+      };
+
+      return {
+        // label: `${getPoint(source)}->${target}`,
+        source,
+        target,
+        router: switchRouter(routerType),
+        ...edgeEl
+      }
+    }
+  )
 
   render() {
     console.log('--- DagreIntX6.render()');
@@ -89,7 +121,9 @@ class DagreIntX6 extends Component {
     return (
       <div
         ref={this.containerRef}
+        className="mb-1"
         style={{
+          border: '1px solid gray',
           width: '100%',
           height: '800px'
         }}

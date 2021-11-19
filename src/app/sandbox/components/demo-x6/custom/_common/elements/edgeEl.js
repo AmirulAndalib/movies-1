@@ -8,8 +8,9 @@ const edgeEl = {
       stroke: '#769AF7',
       strokeWidth: 1,
       targetMarker: {
-        // name: 'block'
-        name: ''
+        name: 'block',
+        // name: ''
+        size: 5
       },
     },
   },
