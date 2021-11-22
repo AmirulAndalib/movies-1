@@ -1,6 +1,7 @@
-// import MainReaflow from './demo-reaflow/MainReaflow';
 import TreeNode from './TreeNode/TreeNode';
+import NodePort from './NodePort/NodePort';
 
 export {
   TreeNode,
+  NodePort,
 };

@@ -2,12 +2,24 @@
 import './DagreIntX6.scss';
 
 import React, { Component, createRef } from 'react';
+import ReactDOM from 'react-dom';
 import { Graph } from '@antv/x6';
 import { DagreLayout } from '@antv/layout';
 import '@antv/x6-react-shape';
 
-import { NODES, EDGES_BASIC, EDGES_ADDITIONAL } from '../_data-example/data-example.js';
-import { NODE_SHAPES, EDGE_EL } from '../_common/elements';
+import {
+  NODES, EDGES_BASIC,
+  EDGES_ADDITIONAL
+} from '../_data-example/data-example.js';
+
+import {
+  NODE_SHAPES,
+  EDGE_EL
+} from '../_common/elements';
+
+import { NodePort } from '@/sandbox/components/tree';
+
+import DAGRE_CONFIG from '../_common/layout/dagre-config';
 
 import { switchRouter } from '../_common/edges-routing/edges-routing.js';
 import { isString } from '@/utils/common';
@@ -35,40 +47,32 @@ class DagreIntX6 extends Component {
         visible: true,
         type: 'mesh',
       },
+      onPortRendered(args) {
+        const { container, contentSelectors, port } = args;
+        const targetEl = contentSelectors.foContent;
+
+        console.log('\n--- port.id:', port.id);
+        console.log('args:', args);
+
+        if (container && targetEl) {
+          ReactDOM.render(
+            <NodePort />,
+            targetEl
+          );
+        }
+      }
     });
 
-    const dagreLayout = new DagreLayout({
-      type: 'dagre',
-
-      // Направление компоновки
-      rankdir: 'TB',
-
-      // Выравнивание узлов
-      // align: 'UR',
-
-      // Количество пикселей, разделяющих уровни (по вертикаль)
-      ranksep: 45,
-
-      // Количество пикселей, разделяющих узлы (по горизонтали)
-      nodesep: 20,
-
-      // Количество пикселей, разделяющих связи (по горизонтали)
-      edgesep: 20,
-
-      // Тип алгоритма для присвоения ранга каждому узлу входного графа
-      // ranker: 'tight-tree',
-      ranker: 'longest-path'
-    });
-
+    const dagreLayout = new DagreLayout(DAGRE_CONFIG);
     const modelLayout = dagreLayout.layout(modelRaw);
 
     graph.fromJSON(modelLayout);
 
     EDGES_ADDITIONAL.forEach(i => graph.addEdge(i));
 
-    console.log('- dagre, containerEl:', containerEl);
-    console.log('- dagre, modelRaw:', modelRaw);
-    console.log('- dagre, modelLayout:', modelLayout);
+    // console.log('- dagre, containerEl:', containerEl);
+    // console.log('- dagre, modelRaw:', modelRaw);
+    // console.log('- dagre, modelLayout:', modelLayout);
   }
 
   containerRef = createRef();
@@ -101,7 +105,7 @@ class DagreIntX6 extends Component {
 
   mapEdges = (data) => data.map(
     item => {
-      const { source, target, routerType } = item;
+      const { source, target, routerType, labelPos } = item;
 
       const getPoint = (val) => {
         return isString(val)
@@ -109,8 +113,25 @@ class DagreIntX6 extends Component {
           : `${val.cell}/${val.port}`
       };
 
+      const labelValue = `${getPoint(source)}->${target}`;
+
       return {
-        // label: `${getPoint(source)}->${target}`,
+        label: {
+          position: {
+            distance: labelPos
+              ? labelPos
+              : 0.15
+          },
+          attrs: {
+            label: {
+              text: labelValue,
+              fill: 'gray',
+            },
+            body: {
+              stroke: 'lightgray',
+            }
+          },
+        },
         source,
         target,
         router: switchRouter(routerType),

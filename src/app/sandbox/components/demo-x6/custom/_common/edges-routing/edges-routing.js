@@ -3,7 +3,7 @@
 const manhattanDefault = {
   name: 'manhattan',
   args: {
-    step: 15,
+    step: 35,
     startDirections: ['bottom', 'right'],
     endDirections: ['top', 'left'],
   },
@@ -11,7 +11,7 @@ const manhattanDefault = {
 const manhattanBT = {
   name: 'manhattan',
   args: {
-    step: 10,
+    step: 25,
     startDirections: ['bottom'],
     endDirections: ['top'],
   },
