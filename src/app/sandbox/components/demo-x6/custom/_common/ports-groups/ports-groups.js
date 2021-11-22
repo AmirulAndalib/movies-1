@@ -1,3 +1,4 @@
+/* eslint-disable */
 import { Markup } from '@antv/x6';
 
 // Port groups (examples with different shapes)
@@ -20,41 +21,88 @@ const PORTS_GROUPS = {
     },
 
     // custom - rectangle
-    rectangleCustom: {
-      position: { name: 'bottom' },
-      label: { position: 'bottom' },
-      markup: {
-        tagName: 'rect',
-        // selector: 'rect',
-        attrs: {
-          width: 10,
-          height: 10,
-          fill: '#fff',
-          stroke: '#000',
-          magnet: true,
-          x: -5,
-          y: -5,
+    getRectangleCustomGroup: (options = {}) => {
+      const {
+        portPosition = 'bottom',
+        labelPosition = 'bottom'
+      } = options;
+
+      const fillColor = '#BA55D3';
+
+      return {
+        position: {
+          name: portPosition
         },
-      },
+        label: {
+          position: labelPosition,
+          markup: [
+            {
+              tagName: 'text',
+              className: 'port-shapes--built-in__rectangle-label-el',
+              attrs: {
+                fill: fillColor,
+                fontSize: 10
+              }
+            },
+          ],
+        },
+        markup: {
+          tagName: 'rect',
+          attrs: {
+            width: 10,
+            height: 10,
+            fill: '#fff',
+            stroke: fillColor,
+            strokeWidth: 1,
+            magnet: true,
+            x: -5,
+            y: -5,
+          },
+        },
+      }
     }
   },
 
   // Port groups with custom shapes
   SHAPES_FOREIGN: {
-    nodePort: {
-      position: { name: 'bottom' },
-      label: { position: 'bottom' },
-      markup: Markup.getForeignObjectMarkup(),
-      attrs: {
-        fo: {
-          width: 12,
-          height: 12,
-          x: -5,
-          y: -5,
-          magnet: 'true'
+    getDefaultGroup: function (options = { }) {
+      const {
+        portPosition = 'bottom',
+        labelPosition = 'bottom',
+        x = '-5',
+        y = '-5',
+        width = 10,
+        height = 10,
+      } = options;
+
+      const fillColor = '#FF6347';
+
+      return {
+        position: {
+          name: portPosition
         },
-      },
-      zIndex: 100
+        label: {
+          position: labelPosition,
+          markup: {
+            tagName: 'text',
+            attrs: {
+              fill: fillColor,
+              fontSize: 10
+            }
+          },
+        },
+        markup: [Markup.getForeignObjectMarkup()],
+        attrs: {
+          fo: {
+            width,
+            height,
+            x,
+            y,
+            magnet: 'true'
+          },
+        },
+        zIndex: 100
+      }
     }
   }
 };

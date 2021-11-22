@@ -8,21 +8,17 @@ import { DagreLayout } from '@antv/layout';
 import '@antv/x6-react-shape';
 
 import {
-  NODES, EDGES_BASIC,
+  getNodes,
+  getEdgesBasic,
   EDGES_ADDITIONAL
 } from '../_data-example/data-example.js';
-
-import {
-  NODE_SHAPES,
-  EDGE_EL
-} from '../_common/elements';
 
 import { NodePort } from '@/sandbox/components/tree';
 
 import DAGRE_CONFIG from '../_common/layout/dagre-config';
 
-import { switchRouter } from '../_common/edges-routing/edges-routing.js';
-import { isString } from '@/utils/common';
+import { processNodes } from '../_common/map-nodes/map-nodes';
+import { processEdges } from '../_common/map-edges/map-edges';
 
 class DagreIntX6 extends Component {
 
@@ -33,8 +29,38 @@ class DagreIntX6 extends Component {
     console.log('--- DagreIntX6.componentDidMount()');
 
     const modelRaw = {
-      nodes: this.mapNodes(NODES),
-      edges: this.mapEdges(EDGES_BASIC)
+      nodes: processNodes({
+        data: getNodes({
+          commonOptions: {
+            // showMotherPorts: true,
+            // showPortLabels: true,
+            useOnlyReactShape: true,
+            useOnlyReactCircle: true,
+          },
+          lastChildOptions: {
+            childrenGroup: 2,
+            useGroupStyledPort: true,
+          }
+        })
+      }),
+      edges: processEdges({
+        edgesListOptions: {
+          data: getEdgesBasic({
+            lastChildOptions: {
+              useTargetPort: true,
+              // useEmptyRouterType: true,
+            }
+          }),
+          // showLabels: true
+        },
+        edgeElementOptions: {
+          useRondedConnectors: true,
+          targetMarkerType: 'path',
+          // targetMarkerType: 'arrow',
+          // targetMarkerType: 'rect',
+          // targetMarkerType: '',
+        }
+      })
     };
 
     const graph = new Graph({
@@ -43,21 +69,25 @@ class DagreIntX6 extends Component {
         nodeMovable: true,
       },
       grid: {
-        size: 25,
+        size: 20,
         visible: true,
         type: 'mesh',
       },
       onPortRendered(args) {
-        const { container, contentSelectors, port } = args;
-        const targetEl = contentSelectors.foContent;
+        const { container, contentSelectors } = args;
+        const { foContent } = contentSelectors;
+        const { customParams } = args?.node?.store?.data;
 
-        console.log('\n--- port.id:', port.id);
-        console.log('args:', args);
+        /*         console.log('\n--- port:', args?.port?.id);
+                console.log('args:', args);
+                console.log('customParams:', customParams); */
 
-        if (container && targetEl) {
+        if (container && foContent) {
           ReactDOM.render(
-            <NodePort />,
-            targetEl
+            <NodePort
+              customParams={customParams}
+            />,
+            foContent
           );
         }
       }
@@ -76,69 +106,6 @@ class DagreIntX6 extends Component {
   }
 
   containerRef = createRef();
-
-  mapNodes = (data) => data.map(
-    item => {
-      const { id, label, layer, customShape, ports, cls = 'node-circle', customParams } = item;
-
-      const nodeEl = NODE_SHAPES[
-        customShape
-          ? customShape
-          : 'react'
-      ];
-
-      const labelValue = customShape
-        ? `${id} \n (${label})`
-        : label;
-
-      return {
-        id,
-        label: labelValue,
-        layer,
-        ports,
-        cls,
-        customParams,
-        ...nodeEl
-      }
-    }
-  )
-
-  mapEdges = (data) => data.map(
-    item => {
-      const { source, target, routerType, labelPos } = item;
-
-      const getPoint = (val) => {
-        return isString(val)
-          ? val
-          : `${val.cell}/${val.port}`
-      };
-
-      const labelValue = `${getPoint(source)}->${target}`;
-
-      return {
-        label: {
-          position: {
-            distance: labelPos
-              ? labelPos
-              : 0.15
-          },
-          attrs: {
-            label: {
-              text: labelValue,
-              fill: 'gray',
-            },
-            body: {
-              stroke: 'lightgray',
-            }
-          },
-        },
-        source,
-        target,
-        router: switchRouter(routerType),
-        ...EDGE_EL
-      }
-    }
-  )
 
   render() {
     console.log('--- DagreIntX6.render()');
