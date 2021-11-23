@@ -8,18 +8,9 @@ import {
   PORTS_CP,
 } from './constants.data-example';
 
-const createEdge = ({
-  source,
-  target,
-  labelPos,
-  routerType = MANHATTAN_BT
-}) => ({
-  source,
-  target,
-  routerType,
-  labelPos: labelPos || 0.75,
-});
-
+import {
+  buildEdge,
+} from '@/sandbox/helpers/tree/edges';
 
 // Модель, базовые связи
 const getEdgesBasic = (options = {}) => {
@@ -33,55 +24,25 @@ const getEdgesBasic = (options = {}) => {
 
   return [
     // дедушка и бабушка -> отец ЦП
-    createEdge({
-      source: 'id1',
-      target: 'id5'
-    }),
-    createEdge({
-      source: 'id2',
-      target: 'id5'
-    }),
+    { source: 'id1', target: 'id5' },
+    { source: 'id2', target: 'id5' },
 
     // дедушка и бабушка -> мать ЦП
-    createEdge({
-      source: 'id3',
-      target: 'id6'
-    }),
-    createEdge({
-      source: 'id4',
-      target: 'id6'
-    }),
+    { source: 'id3', target: 'id6' },
+    { source: 'id4', target: 'id6' },
 
     // отец ЦП и мать ЦП -> ЦП
-    createEdge({
-      source: 'id5',
-      target: NODE_CP_ID
-    }),
-    createEdge({
-      source: 'id6',
-      target: NODE_CP_ID
-    }),
+    { source: 'id5', target: NODE_CP_ID },
+    { source: 'id6', target: NODE_CP_ID },
 
     // ЦП -> потомки
-    createEdge({
-      source: PORTS_CP.left,
-      target: 'id10'
-    }),
-    createEdge({
-      source: PORTS_CP.left,
-      target: 'id11'
-    }),
-    createEdge({
-      source: PORTS_CP.left,
-      target: 'id12'
-    }),
-    createEdge({
-      source: PORTS_CP.left,
-      target: 'id13'
-    }),
+    { source: PORTS_CP.left, target: 'id10' },
+    { source: PORTS_CP.left, target: 'id11' },
+    { source: PORTS_CP.left, target: 'id12' },
+    { source: PORTS_CP.left, target: 'id13' },
 
     // потомок для отладки связей
-    createEdge({
+    {
       source: PORTS_CP.right,
       target: (useTargetPort
         ? {
@@ -92,8 +53,8 @@ const getEdgesBasic = (options = {}) => {
       routerType: (useEmptyRouterType
         ? ''
         : MANHATTAN_BT)
-    }),
-  ];
+    }
+  ].map(i => buildEdge(i));
 };
 
 // model, edges (additional)

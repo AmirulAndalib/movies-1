@@ -8,7 +8,7 @@ import '@antv/x6-react-shape';
 
 // хэлперы для дерева
 import buildNodesModel from '@/sandbox/helpers/tree/nodes';
-import processEdges from '@/sandbox/helpers/tree/edges';
+import buildEdgesModel from '@/sandbox/helpers/tree/edges';
 import {
   onPortRendered
 } from '@/sandbox/helpers/tree/ports';
@@ -46,7 +46,7 @@ class MiniTreeBlock extends Component {
           }
         })
       }),
-      edges: processEdges({
+      edges: buildEdgesModel({
         edgesListOptions: {
           data: getEdgesBasic({
             lastChildOptions: {

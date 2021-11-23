@@ -4,14 +4,14 @@ import switchRouter from './routing.edges';
 import { isString } from '@/utils/common';
 
 // Возвращает текст точки
-const getPoint = (val) => (
+const getPointText = (val) => (
   isString(val)
     ? val
     : `${val.cell}/${val.port}`
 );
 
 // Возвращает опции метки
-const getLabelOptions = ({ text, labelPos }) => ({
+const getLabelParams = ({ text, labelPos }) => ({
   position: {
     distance: labelPos || 0.15
   },
@@ -28,7 +28,7 @@ const getLabelOptions = ({ text, labelPos }) => ({
 });
 
 // Обрабатывает список связей
-function processEdges(options = {}) {
+function buildEdgesModel(options = {}) {
 
   // Опции для списка связей
   const { edgesListOptions = {} } = options;
@@ -52,8 +52,8 @@ function processEdges(options = {}) {
       };
 
       if (showLabels) {
-        edge.label = getLabelOptions({
-          text: `${getPoint(source)}->${getPoint(target)}`,
+        edge.label = getLabelParams({
+          text: `${getPointText(source)}->${getPointText(target)}`,
           labelPos: item.labelPos
         });
       }
@@ -63,4 +63,4 @@ function processEdges(options = {}) {
   );
 }
 
-export default processEdges;
+export default buildEdgesModel;

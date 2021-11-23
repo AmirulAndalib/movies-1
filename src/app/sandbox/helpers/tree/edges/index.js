@@ -1,11 +1,16 @@
+import {
+  buildEdge,
+} from './data-processing.edges';
+
 import getEdgeMarkup from './markup.edges';
-import processEdges from './processing.edges';
+import buildEdgesModel from './model-processing.edges';
 import switchRouter from './routing.edges';
 
 export {
+  buildEdge,
   getEdgeMarkup,
-  processEdges,
+  buildEdgesModel,
   switchRouter,
 };
 
-export default processEdges;
+export default buildEdgesModel;
