@@ -1,6 +1,4 @@
-import {
-  NODE_SHAPES,
-} from '@/sandbox/helpers/tree/elements';
+import NODE_SHAPES from './markup.nodes';
 
 // Обрабатывает список epkjd
 function processNodes({
@@ -29,6 +27,4 @@ function processNodes({
   );
 }
 
-export {
-  processNodes
-};
+export default processNodes;

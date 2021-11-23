@@ -5,8 +5,8 @@ import {
 } from '@/sandbox/components/common/layout';
 
 import {
-  MiniTreePage
-} from '@/sandbox/pages';
+  MiniTreeBlock
+} from '@/sandbox/components/tree-blocks';
 
 /* import {
   MainReaflow,
@@ -23,7 +23,7 @@ const RootRouteSB = () => (
     {/* <OrgChartX6 /> */}
     {/* <DemoELK /> */}
     {/* <ElkX6 /> */}
-    <MiniTreePage />
+    <MiniTreeBlock />
   </LayoutSB>
 );
 

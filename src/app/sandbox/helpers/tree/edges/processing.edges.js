@@ -1,5 +1,5 @@
-import { getEdgeElement } from '@/sandbox/helpers/tree/elements';
-import { switchRouter } from '@/sandbox/helpers/tree/edges-routing/edges-routing';
+import getEdgeMarkup from './markup.edges';
+import switchRouter from './routing.edges';
 
 import { isString } from '@/utils/common';
 
@@ -48,7 +48,7 @@ function processEdges(options = {}) {
         source,
         target,
         router: switchRouter(routerType),
-        ...getEdgeElement(edgeElementOptions)
+        ...getEdgeMarkup(edgeElementOptions)
       };
 
       if (showLabels) {
@@ -63,6 +63,4 @@ function processEdges(options = {}) {
   );
 }
 
-export {
-  processEdges
-};
+export default processEdges;

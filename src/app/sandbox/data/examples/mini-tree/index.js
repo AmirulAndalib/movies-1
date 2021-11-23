@@ -1,11 +1,11 @@
+import getNodes from './nodes.data-example';
 import {
-  getNodes,
   getEdgesBasic,
-  EDGES_ADDITIONAL
-} from './data-example.mini-tree';
+  getEdgesAdditional
+} from './edges.data-example';
 
 export {
   getNodes,
   getEdgesBasic,
-  EDGES_ADDITIONAL
+  getEdgesAdditional,
 };

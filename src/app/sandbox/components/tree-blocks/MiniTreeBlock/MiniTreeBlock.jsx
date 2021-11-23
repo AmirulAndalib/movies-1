@@ -1,5 +1,5 @@
 /* eslint-disable */
-import './MiniTreePage.scss';
+import './MiniTreeBlock.scss';
 
 import React, { Component, createRef } from 'react';
 import ReactDOM from 'react-dom';
@@ -8,27 +8,29 @@ import { DagreLayout } from '@antv/layout';
 import '@antv/x6-react-shape';
 
 // хэлперы для дерева
-import { processNodes } from '@/sandbox/helpers/tree/map-nodes/map-nodes';
-import { processEdges } from '@/sandbox/helpers/tree/map-edges/map-edges';
-import DAGRE_CONFIG from '@/sandbox/helpers/tree/layout/dagre-config';
+import processNodes from '@/sandbox/helpers/tree/nodes';
+import processEdges from '@/sandbox/helpers/tree/edges';
 
 // компоненты для дерева
-import { NodePort } from '@/sandbox/components/tree';
+import { NodePort } from '@/sandbox/components/tree-elements';
 
 // тестовые данные для дерева
 import {
   getNodes,
   getEdgesBasic,
-  EDGES_ADDITIONAL
+  getEdgesAdditional
 } from '@/sandbox/data/examples/mini-tree';
 
-class MiniTreePage extends Component {
+// конфигурация для компоновки узлов и связей
+import DAGRE_CONFIG from '@/sandbox/configs/tree/layout/dagre.config';
+
+class MiniTreeBlock extends Component {
 
   componentDidMount() {
     const { containerRef } = this;
     const { current: containerEl } = containerRef;
 
-    console.log('--- MiniTreePage.componentDidMount()');
+    console.log('--- MiniTreeBlock.componentDidMount()');
 
     const modelRaw = {
       nodes: processNodes({
@@ -100,7 +102,7 @@ class MiniTreePage extends Component {
 
     graph.fromJSON(modelLayout);
 
-    EDGES_ADDITIONAL.forEach(i => graph.addEdge(i));
+    getEdgesAdditional().forEach(i => graph.addEdge(i));
 
     // console.log('- dagre, containerEl:', containerEl);
     // console.log('- dagre, modelRaw:', modelRaw);
@@ -110,7 +112,7 @@ class MiniTreePage extends Component {
   containerRef = createRef();
 
   render() {
-    console.log('--- MiniTreePage.render()');
+    console.log('--- MiniTreeBlock.render()');
 
     return (
       <div
@@ -126,4 +128,4 @@ class MiniTreePage extends Component {
   }
 }
 
-export default MiniTreePage;
+export default MiniTreeBlock;

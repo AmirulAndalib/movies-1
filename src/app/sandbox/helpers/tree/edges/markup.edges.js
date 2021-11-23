@@ -29,7 +29,7 @@ const switchTargetMarker = (val) => {
   }
 };
 
-const getEdgeElement = (options = {}) => {
+const getEdgeMarkup = (options = {}) => {
   const {
     useRondedConnectors = false,
     targetMarkerType = '',
@@ -58,4 +58,4 @@ const getEdgeElement = (options = {}) => {
   };
 };
 
-export default getEdgeElement;
+export default getEdgeMarkup;

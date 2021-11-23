@@ -1,7 +1,7 @@
 /* eslint-disable */
 
 import React from 'react';
-import { TreeNode } from '@/sandbox/components/tree';
+import { TreeNode } from '@/sandbox/components/tree-elements';
 
 const sizeDefaults = {
   width: 75,

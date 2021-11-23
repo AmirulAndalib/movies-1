@@ -61,6 +61,4 @@ function switchRouter(val) {
   }
 }
 
-export {
-  switchRouter
-};
+export default switchRouter;

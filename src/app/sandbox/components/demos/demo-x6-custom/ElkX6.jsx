@@ -3,8 +3,8 @@ import React, { Component, createRef } from 'react';
 import { Graph } from '@antv/x6';
 import ELK from 'elkjs/lib/elk.bundled.js';
 
-import { NODE_SHAPES } from '@/sandbox/helpers/tree/elements';
-import getEdgeElement from '@/sandbox/helpers/tree/elements/edgeEl';
+import { NODE_SHAPES } from '@/sandbox/helpers/tree/nodes';
+import { getEdgeMarkup } from '@/sandbox/helpers/tree/edges';
 
 import { nodes, edges } from '@/sandbox/data/examples/elk';
 
@@ -30,7 +30,7 @@ class ElkX6 extends Component {
         id: `id-edge-${i}`,
         source: edge[0],
         target: edge[1],
-        ...getEdgeElement()
+        ...getEdgeMarkup()
       });
     });
 
