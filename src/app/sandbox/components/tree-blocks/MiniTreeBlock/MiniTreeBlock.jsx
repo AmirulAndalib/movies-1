@@ -6,22 +6,25 @@ import { Graph } from '@antv/x6';
 import { DagreLayout } from '@antv/layout';
 import '@antv/x6-react-shape';
 
-// хэлперы для дерева
+// Хэлперы для дерева
 import buildNodesModel from '@/sandbox/helpers/tree/nodes';
 import buildEdgesModel from '@/sandbox/helpers/tree/edges';
 import {
   onPortRendered
 } from '@/sandbox/helpers/tree/ports';
 
-// тестовые данные для дерева
+// Тестовые данные для дерева
 import {
   getNodes,
   getEdgesBasic,
   getEdgesAdditional
 } from '@/sandbox/data/examples/mini-tree';
 
-// конфигурация для компоновки узлов и связей
-import DAGRE_CONFIG from '@/sandbox/configs/tree/layout/dagre.config';
+// Конфигурация для компоновки узлов и связей
+import DAGRE_CONFIG from '@/sandbox/configs/tree/layout/main.dagre-config';
+
+// Конфигурация для узлов (модель) и связей (модель, разметка)
+import MODEL_CONFIG from '@/sandbox/configs/tree/model/main.model-config';
 
 class MiniTreeBlock extends Component {
 
@@ -33,36 +36,11 @@ class MiniTreeBlock extends Component {
 
     const modelRaw = {
       nodes: buildNodesModel({
-        data: getNodes({
-          commonOptions: {
-            // showMotherPorts: true,
-            // showPortLabels: true,
-            useOnlyReactShape: true,
-            useOnlyReactCircle: true,
-          },
-          lastChildOptions: {
-            childrenGroup: 2,
-            useGroupStyledPort: true,
-          }
-        })
+        data: getNodes(MODEL_CONFIG.nodesProcessing)
       }),
       edges: buildEdgesModel({
-        edgesListOptions: {
-          data: getEdgesBasic({
-            lastChildOptions: {
-              useTargetPort: true,
-              // useEmptyRouterType: true,
-            }
-          }),
-          // showLabels: true
-        },
-        edgeElementOptions: {
-          useRondedConnectors: true,
-          targetMarkerType: 'path',
-          // targetMarkerType: 'arrow',
-          // targetMarkerType: 'rect',
-          // targetMarkerType: '',
-        }
+        data: getEdgesBasic(MODEL_CONFIG.edgesProcessing),
+        edgesMarkupOptions: MODEL_CONFIG.edgesMarkup
       })
     };
 
