@@ -1,12 +1,12 @@
 /* eslint-disable */
-import './TreeNode.scss';
+import './NodeEl.scss';
 
 import React, { Component } from 'react';
 import cn from 'classnames';
 
-class TreeNode extends Component {
+class NodeEl extends Component {
   componentDidMount() {
-    // console.log('--- TreeNode.componentDidMount()');
+    // console.log('--- NodeEl.componentDidMount()');
   }
   /* 
     shouldComponentUpdate() {
@@ -30,14 +30,14 @@ class TreeNode extends Component {
     } = this.props;
     const { label } = customData;
 
-    // console.log('\n --- TreeNode.render()');
+    // console.log('\n --- NodeEl.render()');
     // console.log('node.id:', node.id);
     // console.log('label:', label);
     // console.log('node:', node);
     // console.log('customParams:', customParams);
 
     return (
-      <div className={cn('treeNode', cls)}>
+      <div className={cn('nodeEl', cls)}>
         <div className="content">
           {node.id}
           <br />
@@ -48,4 +48,4 @@ class TreeNode extends Component {
   }
 }
 
-export default TreeNode;
+export default NodeEl;

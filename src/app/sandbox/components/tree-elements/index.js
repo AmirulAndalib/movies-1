@@ -1,7 +1,7 @@
-import TreeNode from './TreeNode/TreeNode';
-import NodePort from './NodePort/NodePort';
+import NodeEl from './NodeEl/NodeEl';
+import PortEl from './PortEl/PortEl';
 
 export {
-  TreeNode,
-  NodePort,
+  NodeEl,
+  PortEl,
 };

@@ -12,7 +12,7 @@ import processNodes from '@/sandbox/helpers/tree/nodes';
 import processEdges from '@/sandbox/helpers/tree/edges';
 
 // компоненты для дерева
-import { NodePort } from '@/sandbox/components/tree-elements';
+import { PortEl } from '@/sandbox/components/tree-elements';
 
 // тестовые данные для дерева
 import {
@@ -88,7 +88,7 @@ class MiniTreeBlock extends Component {
 
         if (container && foContent) {
           ReactDOM.render(
-            <NodePort
+            <PortEl
               customParams={customParams}
             />,
             foContent

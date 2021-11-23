@@ -1,7 +1,7 @@
 /* eslint-disable */
 
 import React from 'react';
-import { TreeNode } from '@/sandbox/components/tree-elements';
+import { NodeEl } from '@/sandbox/components/tree-elements';
 
 const sizeDefaults = {
   width: 75,
@@ -33,7 +33,7 @@ const NODE_SHAPES = {
     shape: 'react-shape',
     component(node) {
       return (
-        <TreeNode
+        <NodeEl
           cls={node.getProp('cls')}
           customParams={node.getProp('customParams')}
           customData={{
