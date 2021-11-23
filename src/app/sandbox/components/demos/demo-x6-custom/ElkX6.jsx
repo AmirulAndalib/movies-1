@@ -3,10 +3,10 @@ import React, { Component, createRef } from 'react';
 import { Graph } from '@antv/x6';
 import ELK from 'elkjs/lib/elk.bundled.js';
 
-import { nodeEl } from '../_common/elements/nodeEl.js';
-import { edgeEl } from '../_common/elements/edgeEl.js';
+import { NODE_SHAPES } from '@/sandbox/helpers/tree/elements';
+import getEdgeElement from '@/sandbox/helpers/tree/elements/edgeEl';
 
-import { nodes, edges } from '../_data-example-elk/data-example.js';
+import { nodes, edges } from '@/sandbox/data/examples/elk';
 
 class ElkX6 extends Component {
   componentDidMount() {
@@ -19,7 +19,7 @@ class ElkX6 extends Component {
       nodes: nodes.map(
         item => ({
           ...item,
-          ...nodeEl.circle
+          ...NODE_SHAPES.circle
         })
       ),
       edges: [],
@@ -30,7 +30,7 @@ class ElkX6 extends Component {
         id: `id-edge-${i}`,
         source: edge[0],
         target: edge[1],
-        ...edgeEl
+        ...getEdgeElement()
       });
     });
 

@@ -1,15 +1,20 @@
 import React from 'react';
 
-import LayoutSB from '@/sandbox/components/layout/LayoutSB';
+import {
+  LayoutSB
+} from '@/sandbox/components/common/layout';
 
 import {
-  // MainReaflow,
-  // CustomNodesX6,
-  // OrgChartX6,
-  // DemoELK,
-  // ElkX6,
-  DagreIntX6
-} from '@/sandbox/components';
+  MiniTreePage
+} from '@/sandbox/pages';
+
+/* import {
+  MainReaflow,
+  CustomNodesX6,
+  OrgChartX6,
+  DemoELK,
+  ElkX6
+} from '@/sandbox/components/demos'; */
 
 const RootRouteSB = () => (
   <LayoutSB text="Demo sandbox">
@@ -18,7 +23,7 @@ const RootRouteSB = () => (
     {/* <OrgChartX6 /> */}
     {/* <DemoELK /> */}
     {/* <ElkX6 /> */}
-    <DagreIntX6 />
+    <MiniTreePage />
   </LayoutSB>
 );
 

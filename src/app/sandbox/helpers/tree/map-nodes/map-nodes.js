@@ -1,6 +1,6 @@
 import {
   NODE_SHAPES,
-} from '@/sandbox/components/demo-x6/custom/_common/elements';
+} from '@/sandbox/helpers/tree/elements';
 
 // Обрабатывает список epkjd
 function processNodes({

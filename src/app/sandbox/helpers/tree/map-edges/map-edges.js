@@ -1,8 +1,6 @@
-import {
-  getEdgeElement
-} from '@/sandbox/components/demo-x6/custom/_common/elements';
+import { getEdgeElement } from '@/sandbox/helpers/tree/elements';
+import { switchRouter } from '@/sandbox/helpers/tree/edges-routing/edges-routing';
 
-import { switchRouter } from '@/sandbox/components/demo-x6/custom/_common/edges-routing/edges-routing';
 import { isString } from '@/utils/common';
 
 // Возвращает текст точки

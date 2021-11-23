@@ -1,5 +1,5 @@
 /* eslint-disable */
-import './DagreIntX6.scss';
+import './MiniTreePage.scss';
 
 import React, { Component, createRef } from 'react';
 import ReactDOM from 'react-dom';
@@ -7,26 +7,28 @@ import { Graph } from '@antv/x6';
 import { DagreLayout } from '@antv/layout';
 import '@antv/x6-react-shape';
 
+// хэлперы для дерева
+import { processNodes } from '@/sandbox/helpers/tree/map-nodes/map-nodes';
+import { processEdges } from '@/sandbox/helpers/tree/map-edges/map-edges';
+import DAGRE_CONFIG from '@/sandbox/helpers/tree/layout/dagre-config';
+
+// компоненты для дерева
+import { NodePort } from '@/sandbox/components/tree';
+
+// тестовые данные для дерева
 import {
   getNodes,
   getEdgesBasic,
   EDGES_ADDITIONAL
-} from '../_data-example/data-example.js';
+} from '@/sandbox/data/examples/mini-tree';
 
-import { NodePort } from '@/sandbox/components/tree';
-
-import DAGRE_CONFIG from '../_common/layout/dagre-config';
-
-import { processNodes } from '../_common/map-nodes/map-nodes';
-import { processEdges } from '../_common/map-edges/map-edges';
-
-class DagreIntX6 extends Component {
+class MiniTreePage extends Component {
 
   componentDidMount() {
     const { containerRef } = this;
     const { current: containerEl } = containerRef;
 
-    console.log('--- DagreIntX6.componentDidMount()');
+    console.log('--- MiniTreePage.componentDidMount()');
 
     const modelRaw = {
       nodes: processNodes({
@@ -108,7 +110,7 @@ class DagreIntX6 extends Component {
   containerRef = createRef();
 
   render() {
-    console.log('--- DagreIntX6.render()');
+    console.log('--- MiniTreePage.render()');
 
     return (
       <div
@@ -124,4 +126,4 @@ class DagreIntX6 extends Component {
   }
 }
 
-export default DagreIntX6;
+export default MiniTreePage;

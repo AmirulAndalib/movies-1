@@ -1,6 +1,6 @@
 /* eslint-disable */
 
-import PORTS_GROUPS from '../_common/ports-groups/ports-groups';
+import PORTS_GROUPS from '@/sandbox/helpers/tree/ports-groups/ports-groups';
 
 // custom nodes shapes
 const NODE_SHAPE_CIRCLE = 'circle';
