@@ -1,7 +1,7 @@
 import NODE_SHAPES from './markup.nodes';
 
-// Обрабатывает список epkjd
-function processNodes({
+// Обрабатывает список узлов
+function buildNodesModel({
   data
 }) {
   return data.map(
@@ -27,4 +27,4 @@ function processNodes({
   );
 }
 
-export default processNodes;
+export default buildNodesModel;

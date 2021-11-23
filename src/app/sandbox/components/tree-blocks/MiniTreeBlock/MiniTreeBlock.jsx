@@ -7,7 +7,7 @@ import { DagreLayout } from '@antv/layout';
 import '@antv/x6-react-shape';
 
 // хэлперы для дерева
-import processNodes from '@/sandbox/helpers/tree/nodes';
+import buildNodesModel from '@/sandbox/helpers/tree/nodes';
 import processEdges from '@/sandbox/helpers/tree/edges';
 import {
   onPortRendered
@@ -32,7 +32,7 @@ class MiniTreeBlock extends Component {
     console.log('--- MiniTreeBlock.componentDidMount()');
 
     const modelRaw = {
-      nodes: processNodes({
+      nodes: buildNodesModel({
         data: getNodes({
           commonOptions: {
             // showMotherPorts: true,

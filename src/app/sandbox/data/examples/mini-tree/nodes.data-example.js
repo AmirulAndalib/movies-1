@@ -1,5 +1,3 @@
-/* eslint-disable */
-
 import {
   PORTS_GROUPS
 } from '@/sandbox/helpers/tree/ports';
@@ -9,109 +7,19 @@ import {
   NODE_SHAPE_RECTANGLE,
   CLS_CIRCLE,
   CLS_SQUARE,
-  NODE_CP_ID,
-  NODE_CP_PORT_1,
-  NODE_CP_PORT_2,
   NODE_TEST_CHILDREN_ID,
 } from './constants.data-example';
 
-// central person
-const getNodeCP = ({
-  showPortLabels = false,
-  useOnlyReactCircle = false
-}) => {
-  return {
-    id: NODE_CP_ID,
-    label: 'Это я',
-    layer: 3,
-    cls: (useOnlyReactCircle
-      ? CLS_CIRCLE
-      : CLS_SQUARE),
-    // portMarkup: [Markup.getForeignObjectMarkup()],
-    ports: {
-      groups: {
-        group_custom: PORTS_GROUPS.SHAPES_FOREIGN.getDefaultGroup({
-          portPosition: 'bottom',
-          labelPosition: 'bottom'
-        })
-      },
-      items: [
-        {
-          id: NODE_CP_PORT_1,
-          group: 'group_custom',
-          attrs: {
-            text: {
-              text: showPortLabels
-                ? NODE_CP_PORT_1
-                : ''
-            },
-          },
-        },
-        {
-          id: NODE_CP_PORT_2,
-          group: 'group_custom',
-          attrs: {
-            text: {
-              text: showPortLabels
-                ? NODE_CP_PORT_2
-                : ''
-            },
-          },
-        }
-      ]
-    }
-  };
-}
-
-const createChildNode = ({
-  showPortLabels = false,
-  id,
-  label = 'Сын',
-  layer = 4,
-  cls = CLS_CIRCLE,
-  customParams = {
-    childrenGroup: 1
-  },
-  portsGroups
-}) => {
-
-  const childrenPorts = portsGroups
-    ? portsGroups
-    : PORTS_GROUPS.SHAPES_FOREIGN.getDefaultGroup({
-      portPosition: 'top',
-      labelPosition: 'top',
-    }, customParams);
-
-  return {
-    id,
-    label,
-    layer,
-    cls,
-    customParams,
-    ports: {
-      groups: {
-        childrenPorts
-      },
-      items: [
-        {
-          id: `${id}-p1`,
-          group: 'childrenPorts',
-          attrs: {
-            text: {
-              text: showPortLabels
-                ? `${id}-p1`
-                : ''
-            },
-          },
-        }
-      ]
-    }
-  }
-};
+import {
+  buildCentralNode,
+  buildParentNode as configParentBuilder,
+  buildChildNode as configChildBuilder,
+} from '@/sandbox/helpers/tree/nodes';
 
 // Модель, узлы
 const getNodes = (options = {}) => {
 
+  // Опции: общие опции для узлов
   const { commonOptions = {} } = options;
   const {
     showMotherPorts = false,
@@ -120,73 +28,99 @@ const getNodes = (options = {}) => {
     useOnlyReactCircle = false,
   } = commonOptions;
 
-  // опции потомка для отладки связей
+  // Опции: конфигурация общего потомка с матерью ребенка (для отладки связей)
   const { lastChildOptions = {} } = options;
   const {
     childrenGroup = 1,
     useGroupStyledPort = false,
   } = lastChildOptions;
 
+  // Вспомогательные функции для построения объектов узлов
+  const nodeBuilders = {
+
+    // Билдер узлов: 1-й уровень (круг)
+    L1C: configParentBuilder({
+      layer: 1,
+      customShape: useOnlyReactShape
+        ? null
+        : NODE_SHAPE_CIRCLE
+    }),
+
+    // Билдер узлов: 1-й уровень (квадрат)
+    L1R: configParentBuilder({
+      layer: 1,
+      customShape: useOnlyReactShape
+        ? null
+        : NODE_SHAPE_RECTANGLE
+    }),
+
+    // Билдер узлов: 2-й уровень
+    L2: configParentBuilder({
+      layer: 2
+    }),
+
+    // Билдер узлов: 4-й уровень
+    L4: configChildBuilder({
+      showPortLabels
+    }),
+  };
+
   return [
-    // узлы со стандартной формой (circle)
-    {
+
+    /*
+    Уровень 1: Дедушка и бабушка.
+    Пример: узлы со стандартной формой (круг)
+    */
+    nodeBuilders.L1C({
       id: 'id1',
-      label: 'Дедушка',
-      layer: 1,
-      customShape: useOnlyReactShape
-        ? null
-        : NODE_SHAPE_CIRCLE,
-    },
-    {
+      label: 'Дедушка'
+    }),
+    nodeBuilders.L1C({
       id: 'id2',
-      label: 'Бабушка',
-      layer: 1,
-      customShape: useOnlyReactShape
-        ? null
-        : NODE_SHAPE_CIRCLE,
-    },
+      label: 'Бабушка'
+    }),
 
-    // узлы со стандартной формой (rectangle)
-    {
+    /*
+    Уровень 1: Дедушка и бабушка.
+    Пример: узлы со стандартной формой (квадрат)
+    */
+    nodeBuilders.L1R({
       id: 'id3',
-      label: 'Дедушка',
-      layer: 1,
-      customShape: useOnlyReactShape
-        ? null
-        : NODE_SHAPE_RECTANGLE,
-    },
-    {
+      label: 'Дедушка'
+    }),
+    nodeBuilders.L1R({
       id: 'id4',
-      label: 'Бабушка',
-      layer: 1,
-      customShape: useOnlyReactShape
-        ? null
-        : NODE_SHAPE_RECTANGLE,
-    },
+      label: 'Бабушка'
+    }),
 
-    // узлы с react-формой
-    {
+    /*
+    Уровень 2: Отец и мать.
+    Пример: узлы с react-формой
+    */
+    nodeBuilders.L2({
       id: 'id5',
-      label: 'Отец',
-      layer: 2
-    },
-    {
+      label: 'Отец'
+    }),
+    nodeBuilders.L2({
       id: 'id6',
-      label: 'Мать',
-      layer: 2
-    },
+      label: 'Мать'
+    }),
 
-    // Жена
+    // Уровень 3: Жена
     {
       id: 'id7',
       label: 'Жена',
       layer: 3
     },
 
-    // Центральная персона
-    getNodeCP({ showPortLabels, useOnlyReactCircle }),
+    // Уровень 3: Центральная персона
+    buildCentralNode({
+      label: 'Это я',
+      showPortLabels,
+      useOnlyReactCircle
+    }),
 
-    // Мать ребенка
+    // Уровень 3: Мать ребенка
     {
       id: 'id9',
       label: 'Мать \n ребенка',
@@ -215,19 +149,34 @@ const getNodes = (options = {}) => {
         : null
     },
 
-    // Потомки
-    createChildNode({ id: 'id10', showPortLabels }),
-    createChildNode({ id: 'id11', showPortLabels }),
-    createChildNode({ id: 'id12', showPortLabels }),
-    createChildNode({ id: 'id13', showPortLabels }),
+    // Уровень 4: Потомки (от жены)
+    nodeBuilders.L4({
+      id: 'id10',
+      label: 'Сын',
+    }),
 
-    // Потомок для отладки связей
-    createChildNode({
+    nodeBuilders.L4({
+      id: 'id11',
+      label: 'Сын',
+    }),
+
+    nodeBuilders.L4({
+      id: 'id12',
+      label: 'Сын',
+    }),
+
+    nodeBuilders.L4({
+      id: 'id13',
+      label: 'Сын',
+    }),
+
+    // Уровень 4: Потомок для отладки связей (от матери ребенка)
+    nodeBuilders.L4({
       id: NODE_TEST_CHILDREN_ID,
+      label: 'Сын',
       cls: (useOnlyReactCircle
         ? CLS_CIRCLE
         : CLS_SQUARE),
-      showPortLabels,
       customParams: {
         childrenGroup
       },

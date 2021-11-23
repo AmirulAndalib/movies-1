@@ -1,9 +1,20 @@
+import {
+  buildCentralNode,
+  buildParentNode,
+  buildChildNode,
+} from './data-processing.nodes';
+
 import NODE_SHAPES from './markup.nodes';
-import processNodes from './processing.nodes';
+
+import buildNodesModel from './model-processing.nodes';
 
 export {
+  buildCentralNode,
+  buildParentNode,
+  buildChildNode,
+
   NODE_SHAPES,
-  processNodes,
+  buildNodesModel,
 };
 
-export default processNodes;
+export default buildNodesModel;
