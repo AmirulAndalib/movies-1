@@ -2,7 +2,6 @@
 import './MiniTreeBlock.scss';
 
 import React, { Component, createRef } from 'react';
-import ReactDOM from 'react-dom';
 import { Graph } from '@antv/x6';
 import { DagreLayout } from '@antv/layout';
 import '@antv/x6-react-shape';
@@ -10,9 +9,9 @@ import '@antv/x6-react-shape';
 // хэлперы для дерева
 import processNodes from '@/sandbox/helpers/tree/nodes';
 import processEdges from '@/sandbox/helpers/tree/edges';
-
-// компоненты для дерева
-import { PortEl } from '@/sandbox/components/tree-elements';
+import {
+  onPortRendered
+} from '@/sandbox/helpers/tree/ports';
 
 // тестовые данные для дерева
 import {
@@ -77,24 +76,7 @@ class MiniTreeBlock extends Component {
         visible: true,
         type: 'mesh',
       },
-      onPortRendered(args) {
-        const { container, contentSelectors } = args;
-        const { foContent } = contentSelectors;
-        const { customParams } = args?.node?.store?.data;
-
-        /*         console.log('\n--- port:', args?.port?.id);
-                console.log('args:', args);
-                console.log('customParams:', customParams); */
-
-        if (container && foContent) {
-          ReactDOM.render(
-            <PortEl
-              customParams={customParams}
-            />,
-            foContent
-          );
-        }
-      }
+      onPortRendered
     });
 
     const dagreLayout = new DagreLayout(DAGRE_CONFIG);
