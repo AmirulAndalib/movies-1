@@ -28,7 +28,8 @@ const MODEL_CONFIG = {
       childrenGroup: 2,
 
       /* Отладочный параметр: Стилизовать порт для childrenGroup 2 */
-      useGroupStyledPort: true,
+      // useGroupStyledPort: true,
+      useGroupStyledPort: false,
     }
   },
 

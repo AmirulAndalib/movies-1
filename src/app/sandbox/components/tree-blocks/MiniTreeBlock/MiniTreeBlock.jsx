@@ -49,6 +49,11 @@ class MiniTreeBlock extends Component {
       interacting: {
         nodeMovable: true,
       },
+      scroller: {
+        enabled: true,
+        pannable: true,
+        width: '100%'
+      },
       grid: {
         size: 20,
         visible: true,

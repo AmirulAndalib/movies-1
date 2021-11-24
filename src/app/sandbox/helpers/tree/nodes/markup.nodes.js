@@ -4,8 +4,8 @@ import React from 'react';
 import { NodeEl } from '@/sandbox/components/tree-elements';
 
 const sizeDefaults = {
-  width: 75,
-  height: 75,
+  width: 80,
+  height: 80,
 };
 
 const nodeDefaults = {
